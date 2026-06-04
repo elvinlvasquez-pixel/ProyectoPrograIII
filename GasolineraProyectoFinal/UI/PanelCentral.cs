@@ -75,10 +75,10 @@ namespace GasolineraSimulacion.UI
                 SizeMode = TabSizeMode.Fixed
             };
 
-            tabPanel = new TabPage("🛢  Panel Principal") { BackColor = Color.FromArgb(35, 35, 35) };
-            tabHistorial = new TabPage("📋  Historial") { BackColor = Color.FromArgb(35, 35, 35) };
-            tabEstadisticas = new TabPage("📊  Estadísticas") { BackColor = Color.FromArgb(35, 35, 35) };
-            tabConexion = new TabPage("🔌  Arduino") { BackColor = Color.FromArgb(35, 35, 35) };
+            tabPanel = new TabPage(" Panel Principal") { BackColor = Color.FromArgb(35, 35, 35) };
+            tabHistorial = new TabPage(" Historial") { BackColor = Color.FromArgb(35, 35, 35) };
+            tabEstadisticas = new TabPage(" Estadísticas") { BackColor = Color.FromArgb(35, 35, 35) };
+            tabConexion = new TabPage(" Arduino") { BackColor = Color.FromArgb(35, 35, 35) };
 
             tabControl.TabPages.AddRange(new[] { tabPanel, tabHistorial, tabEstadisticas, tabConexion });
             this.Controls.Add(tabControl);
@@ -89,9 +89,8 @@ namespace GasolineraSimulacion.UI
             ConstruirTabConexion();
         }
 
-        // ─────────────────────────────────────────────
+        
         // TAB: PANEL PRINCIPAL
-        // ─────────────────────────────────────────────
         private void ConstruirTabPanel()
         {
             var layout = new TableLayoutPanel
@@ -197,7 +196,7 @@ namespace GasolineraSimulacion.UI
             leftContainer.Controls.Add(grpBombas);
             leftContainer.Controls.Add(grpPrecio);
 
-            // ── DERECHA: formulario ──
+            //DERECHA: formulario
             var grpForm = CrearGroupBox("Nuevo Abastecimiento");
             grpForm.Dock = DockStyle.Fill;
 
@@ -305,9 +304,8 @@ namespace GasolineraSimulacion.UI
             ActualizarLitrosCalculados();
         }
 
-        // ─────────────────────────────────────────────
-        // TAB: HISTORIAL
-        // ─────────────────────────────────────────────
+        
+        // TAB: HISTORIAL  
         private void ConstruirTabHistorial()
         {
             var topPanel = new Panel { Dock = DockStyle.Top, Height = 48, Padding = new Padding(10, 8, 10, 6) };
@@ -364,14 +362,13 @@ namespace GasolineraSimulacion.UI
                     a.Tipo.ToString(),
                     $"{a.LitrosServidos:F3} L",
                     $"Q {a.MontoFinal:F2}",
-                    a.Completado ? "✔ Completado" : "✘ Incompleto"
+                    a.Completado ? " Completado" : " Incompleto"
                 );
             }
         }
 
-        // ─────────────────────────────────────────────
+       
         // TAB: ESTADÍSTICAS
-        // ─────────────────────────────────────────────
         private void ConstruirTabEstadisticas()
         {
             var topPanel = new Panel { Dock = DockStyle.Top, Height = 54, Padding = new Padding(10, 10, 10, 6) };
@@ -379,11 +376,11 @@ namespace GasolineraSimulacion.UI
 
             dtpCierre = new DateTimePicker { Width = 150, Format = DateTimePickerFormat.Short, Value = DateTime.Today };
 
-            var btnCierre = CrearBoton("📅 Cierre Diario", Color.FromArgb(60, 90, 130));
-            var btnPrepago = CrearBoton("💳 Informe Prepago", Color.FromArgb(70, 100, 55));
-            var btnTanque = CrearBoton("⛽ Informe Tanque Lleno", Color.FromArgb(100, 75, 40));
-            var btnBombas = CrearBoton("📊 Uso de Bombas", Color.FromArgb(85, 55, 100));
-            var btnResumen = CrearBoton("🔎 Resumen General", Color.FromArgb(75, 75, 75));
+            var btnCierre = CrearBoton(" Cierre Diario", Color.FromArgb(60, 90, 130));
+            var btnPrepago = CrearBoton(" Informe Prepago", Color.FromArgb(70, 100, 55));
+            var btnTanque = CrearBoton(" Informe Tanque Lleno", Color.FromArgb(100, 75, 40));
+            var btnBombas = CrearBoton(" Uso de Bombas", Color.FromArgb(85, 55, 100));
+            var btnResumen = CrearBoton(" Resumen General", Color.FromArgb(75, 75, 75));
 
             btnCierre.Click += (s, e) => MostrarCierreDiario();
             btnPrepago.Click += (s, e) => MostrarInformePrepago();
@@ -412,7 +409,7 @@ namespace GasolineraSimulacion.UI
         {
             var lista = _estadisticas.CierreDiario(dtpCierre.Value);
             rtbEstadisticas.Clear();
-            RTB($"═══ CIERRE DIARIO: {dtpCierre.Value:dd/MM/yyyy} ═══\n\n", Color.Yellow);
+            RTB($" CIERRE DIARIO: {dtpCierre.Value:dd/MM/yyyy} \n\n", Color.Yellow);
             if (!lista.Any()) { RTB("  Sin abastecimientos este día.\n", Color.Gray); return; }
             foreach (var a in lista) RTB($"  {a}\n", Color.LightGreen);
             RTB($"\n  Total litros  : {_estadisticas.LitrosDiarios(dtpCierre.Value):F3} L\n", Color.Cyan);
@@ -423,7 +420,7 @@ namespace GasolineraSimulacion.UI
         {
             var lista = _estadisticas.InformePrepago();
             rtbEstadisticas.Clear();
-            RTB("═══ INFORME PREPAGOS ═══\n\n", Color.Yellow);
+            RTB(" INFORME PREPAGOS \n\n", Color.Yellow);
             if (!lista.Any()) { RTB("  Sin abastecimientos prepago.\n", Color.Gray); return; }
             foreach (var a in lista) RTB($"  {a}\n", Color.LightGreen);
             RTB($"\n  Total: {lista.Count} | Q{lista.Sum(a => a.MontoFinal):F2}\n", Color.Cyan);
@@ -433,7 +430,7 @@ namespace GasolineraSimulacion.UI
         {
             var lista = _estadisticas.InformeTanqueLleno();
             rtbEstadisticas.Clear();
-            RTB("═══ INFORME TANQUE LLENO ═══\n\n", Color.Yellow);
+            RTB(" INFORME TANQUE LLENO \n\n", Color.Yellow);
             if (!lista.Any()) { RTB("  Sin abastecimientos de tanque lleno.\n", Color.Gray); return; }
             foreach (var a in lista) RTB($"  {a}\n", Color.LightGreen);
             RTB($"\n  Total: {lista.Count} | Q{lista.Sum(a => a.MontoFinal):F2}\n", Color.Cyan);
@@ -442,15 +439,15 @@ namespace GasolineraSimulacion.UI
         private void MostrarInformeBombas()
         {
             rtbEstadisticas.Clear();
-            RTB("═══ USO DE BOMBAS ═══\n\n", Color.Yellow);
+            RTB(" USO DE BOMBAS \n\n", Color.Yellow);
             var conteo = _estadisticas.ConteoPorBomba();
             foreach (var kv in conteo.OrderByDescending(k => k.Value))
                 RTB($"  Bomba {kv.Key}: {kv.Value} abastecimientos\n", Color.LightGreen);
             if (conteo.Values.Any(v => v > 0))
             {
                 var (mas, menos) = _estadisticas.BombasMasYMenosUsadas();
-                RTB($"\n  ★ Más usada:   Bomba {mas}\n", Color.Gold);
-                RTB($"  ▼ Menos usada: Bomba {menos}\n", Color.OrangeRed);
+                RTB($"\n   Más usada:   Bomba {mas}\n", Color.Gold);
+                RTB($"  Menos usada: Bomba {menos}\n", Color.OrangeRed);
             }
         }
 
@@ -458,7 +455,7 @@ namespace GasolineraSimulacion.UI
         {
             var r = _estadisticas.ObtenerResumenGeneral();
             rtbEstadisticas.Clear();
-            RTB("═══ RESUMEN GENERAL ═══\n\n", Color.Yellow);
+            RTB(" RESUMEN GENERAL \n\n", Color.Yellow);
             RTB($"  Total abastecimientos : {r.TotalAbastecimientos}\n", Color.LightGreen);
             RTB($"  Total litros servidos : {r.TotalLitros:F3} L\n", Color.LightGreen);
             RTB($"  Total recaudado       : Q{r.TotalRecaudado:F2}\n", Color.Cyan);
@@ -466,8 +463,8 @@ namespace GasolineraSimulacion.UI
             RTB($"  Tanque lleno          : {r.TotalTanqueLleno}\n", Color.LightBlue);
             if (r.TotalAbastecimientos > 0)
             {
-                RTB($"\n  ★ Bomba más usada  : Bomba {r.BombaMasUsada}\n", Color.Gold);
-                RTB($"  ▼ Bomba menos usada: Bomba {r.BombaMenosUsada}\n", Color.OrangeRed);
+                RTB($"\n  Bomba más usada  : Bomba {r.BombaMasUsada}\n", Color.Gold);
+                RTB($"  Bomba menos usada: Bomba {r.BombaMenosUsada}\n", Color.OrangeRed);
             }
         }
 
@@ -479,9 +476,8 @@ namespace GasolineraSimulacion.UI
             rtbEstadisticas.AppendText(texto);
         }
 
-        // ─────────────────────────────────────────────
+       
         // TAB: ARDUINO
-        // ─────────────────────────────────────────────
         private void ConstruirTabConexion()
         {
             var topPanel = new Panel { Dock = DockStyle.Top, Height = 56, Padding = new Padding(10, 10, 10, 6) };
@@ -540,9 +536,8 @@ namespace GasolineraSimulacion.UI
             RefrescarPuertos();
         }
 
-        // ─────────────────────────────────────────────
+  
         // LÓGICA DE NEGOCIO
-        // ─────────────────────────────────────────────
         private void BtnConfirmar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCliente.Text))
@@ -589,11 +584,11 @@ namespace GasolineraSimulacion.UI
             if (_arduino.EstaConectado)
                 _arduino.EnviarOrden(numBomba, abast.Tipo, litros);
             else
-                AgregarLog($"⚠ Arduino no conectado. Bomba {numBomba} iniciada en modo local.");
+                AgregarLog($" Arduino no conectado. Bomba {numBomba} iniciada en modo local.");
 
             ActualizarEstadoBombas();
             txtCliente.Clear();
-            AgregarLog($"✓ Bomba {numBomba} iniciada — {abast.NombreCliente} | {abast.Tipo} | {litros:F3}L");
+            AgregarLog($" Bomba {numBomba} iniciada — {abast.NombreCliente} | {abast.Tipo} | {litros:F3}L");
         }
 
         private void BtnDetener_Click(object sender, EventArgs e)
@@ -629,10 +624,6 @@ namespace GasolineraSimulacion.UI
             }
         }
 
-        /// <summary>
-        /// Finaliza un abastecimiento con los litros reportados (por Arduino o calculados).
-        /// No pregunta nada al usuario — todo se calcula.
-        /// </summary>
         private void FinalizarAbastecimiento(int numBomba, double litrosServidos, bool completado)
         {
             Bomba bomba = _bombas[numBomba - 1];
