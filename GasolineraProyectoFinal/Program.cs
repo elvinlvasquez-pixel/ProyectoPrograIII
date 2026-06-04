@@ -1,3 +1,5 @@
+using GasolineraSimulacion.UI;
+
 namespace GasolineraProyectoFinal
 {
     internal static class Program
