@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GasolineraProyectoFinal.Models
+﻿namespace GasolineraSimulacion.Models
 {
-    internal class TipoPago
+    public enum TipoPago
     {
+        Prepago,
+        TanqueLleno
     }
 }
